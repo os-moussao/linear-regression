@@ -31,18 +31,18 @@ def train_model() -> tuple[float, float]:
     for _ in range(1000):
         a, b = gradient_descent(x_scaled, y, a, b)
 
+    # unscale a and b
     std = standard_deviation(x)
     mean = get_mean(x)
-
-    # unscale a and b
     a, b = a / std, b - a * mean / std
 
     return a, b
 
 def main():
     a, b = train_model()
-    mileage = float(input("Enter the mileage of the car: "))
-    print(f"Estimated price: {estimate_price(mileage, a, b)}")
+    with open("result.txt", "w") as file:
+        file.write(f"{a} {b}")
+    print(f"Model trained: a = {a}, b = {b}")
 
 if __name__ == "__main__":
     main()
